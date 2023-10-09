@@ -1,14 +1,19 @@
 spring:
+  profiles:
+    active: dev
   application:
-    name: user-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/valid_db
-    username: valid_user
-    password: valid_pwd
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-server:
-  port: 8080
+    name: card-service
+  cloud:
+    config:
+      uri: http://localhost:8888/
+      label: main
+  config:
+    import: optional:configserver:http://localhost:8888/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+  instance:
+    preferIpAddress: true
